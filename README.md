@@ -10,26 +10,16 @@
 
 
 ### How alogithm works ?
-Step 1:
-    Build graph data structure from availble restaurants and driver's current location
-Step 2:
-    Set maximum weight to an edge between driver and restaurant's node => max(time taken to reach restaurant, avg preparation time taken by restaurant)
-Step 3:
-    Build heap from available nodes
-Step 4:
-    Choose the minimum weight from the available nodes
-Step 5:
-    If the given node is restaurant then update graph by adding the restaurant's customer because we can not visit customers without picking meal from restaurant
-Step 6:
-    Add customer node's edge in all unvisited nodes because the next node might be some other restaurant and in that case our first customer wont be reached
-Step 7:
-    Get all the neighbors of the restaurant and compute the heap again
-Step 8:
-    Update heap to the processing heap
-Step 9:
-    Repeat the process from step 4 until our heap is empty
-Step 10:
-    return last heap node with having time and path.
+1.    Build graph data structure from availble restaurants and driver's current location
+2.    Set maximum weight to an edge between driver and restaurant's node => max(time taken to reach restaurant, avg preparation time taken by restaurant)
+3.    Build heap from available nodes
+4.    Choose the minimum weight from the available nodes
+5.    If the given node is restaurant then update graph by adding the restaurant's customer because we can not visit customers without picking meal from restaurant
+6.    Add customer node's edge in all unvisited nodes because the next node might be some other restaurant and in that case our first customer wont be reached
+7.    Get all the neighbors of the restaurant and compute the heap again
+8.    Update heap to the processing heap
+9.    Repeat the process from step 4 ntil our heap is empty
+10.   Return last heap node with having time and path.
 
 
 ### Optimization scope
