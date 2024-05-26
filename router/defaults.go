@@ -39,7 +39,7 @@ func defaultOrders() map[string][]*model.Order {
 			},
 			Customer: &model.Customer{
 				ID:   "c2",
-				Name: "Akshay",
+				Name: "Akshay 2",
 				Location: &model.Location{
 					Lat:  18.575026,
 					Long: 73.813776,
@@ -49,7 +49,7 @@ func defaultOrders() map[string][]*model.Order {
 		{
 			Restaurant: &model.Restaurant{
 				ID:          "r3",
-				Name:        "Star Bazar",
+				Name:        "Sandeep Hotel",
 				AvgPrepTime: 8,
 				Location: &model.Location{
 					Lat:  18.4304,
@@ -58,7 +58,7 @@ func defaultOrders() map[string][]*model.Order {
 			},
 			Customer: &model.Customer{
 				ID:   "c3",
-				Name: "Akshay",
+				Name: "Akshay 3",
 				Location: &model.Location{
 					Lat:  18.5204,
 					Long: 73.8017,

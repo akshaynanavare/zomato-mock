@@ -1,29 +1,44 @@
-# shortest-time-of-deliveries
+# Deliver orders in the possible shortest time.
 
-## How to run this program?
+This project calculates the shortest time of deliveries based on the given data of restaurants, customers and driver.
 
-1. Install `go 1.22` version
-2. Run `make run` command
-3. Hit this curl URL to get the shortest-time-of-deliveries of default values
-    `curl --location --request GET 'http://127.0.0.1:8080/delivery/shortest-time/aman'`
-4. If you want to change the default values, check out router/defaults.go file and change order's data accordingly.
+## Prerequisites
 
+- Install Go version 1.22
 
-### How alogithm works ?
-1.    Build graph data structure from availble restaurants and driver's current location
-2.    Set maximum weight to an edge between driver and restaurant's node => max(time taken to reach restaurant, avg preparation time taken by restaurant)
-3.    Build heap from available nodes
-4.    Choose the minimum weight from the available nodes
-5.    If the given node is restaurant then update graph by adding the restaurant's customer because we can not visit customers without picking meal from restaurant
-6.    Add customer node's edge in all unvisited nodes because the next node might be some other restaurant and in that case our first customer wont be reached
-7.    Get all the neighbors of the restaurant and compute the heap again
-8.    Update heap to the processing heap
-9.    Repeat the process from step 4 ntil our heap is empty
-10.   Return last heap node with having time and path.
+## Installation
 
+1. Ensure you have Go 1.22 installed on your machine. You can download and install it from [the official Go website](https://golang.org/dl/).
 
-### Optimization scope
-1. Above algorithm chooses the greedy approach where it might not give the most optimal solution.
-2. Using the DP by visiting all possible paths will be the optimized solution.
-3. Improvment scope in memory utilization.
+2. Clone the repository and navigate to the project directory.
 
+3. Run the following command to install dependencies and start the application:
+    ```sh
+    make run
+    ```
+
+## Usage
+
+To get the shortest time of deliveries with default values, use the following CURL command:
+```sh
+curl --location --request GET 'http://127.0.0.1:8080/delivery/shortest-time/aman'
+```
+If you want to change the default values, check out the router/defaults.go file and update the order's data accordingly.
+
+## How the Algorithm Works
+**Build Graph Data Structure**: Create a graph from available restaurants and the driver's current location.
+**Set Maximum Weight**: Assign the maximum weight to an edge between the driver and a restaurant node. This weight is the maximum of the time taken to reach the restaurant and the average preparation time taken by the restaurant.
+**Build Heap**: Create a heap from available nodes.
+Choose Minimum Weight Node: Select the minimum weight node from the heap.
+**Update Graph**: If the selected node is a restaurant, update the graph by adding the restaurant's customer. This is because a customer cannot be visited without picking up the meal from the restaurant first.
+**Add Customer Node's Edge**: Add edges for the customer node in all unvisited nodes because the next node might be another restaurant, and in that case, the first customer won't be reached.
+**Get Neighbors**: Retrieve all neighbors of the restaurant and compute the heap again.
+**Update Heap**: Update the processing heap.
+**Repeat Process**: Repeat the process from step 4 until the heap is empty.
+**Return Result**: Return the last heap node containing the time and path.
+Optimization Scope
+
+## Oprimzation scope
+1. The above algorithm uses a greedy approach and might not provide the most optimal solution.
+2. Using Dynamic Programming (DP) by visiting all possible paths will yield a more optimized solution.
+3. There is scope for improvement in memory utilization.
