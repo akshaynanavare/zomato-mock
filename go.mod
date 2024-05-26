@@ -1,4 +1,4 @@
-module github.com/akshaynanavare/shortest-time
+module github.com/akshaynanavare/zomato-mock
 
 go 1.22
 

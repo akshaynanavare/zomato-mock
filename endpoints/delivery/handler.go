@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	api "github.com/akshaynanavare/shortest-time/api"
+	api "github.com/akshaynanavare/zomato-mock/api"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/spf13/cast"

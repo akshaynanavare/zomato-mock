@@ -3,9 +3,9 @@ package router
 import (
 	"fmt"
 
-	api "github.com/akshaynanavare/shortest-time/api"
-	"github.com/akshaynanavare/shortest-time/endpoints/delivery"
-	repository "github.com/akshaynanavare/shortest-time/repository"
+	api "github.com/akshaynanavare/zomato-mock/api"
+	"github.com/akshaynanavare/zomato-mock/endpoints/delivery"
+	repository "github.com/akshaynanavare/zomato-mock/repository"
 
 	"log"
 	"net/http"
@@ -33,7 +33,7 @@ func addRoutes(r *httprouter.Router) {
 
 	deliveryHandler := delivery.NewHandler(delivery.NewService(order, deliverPartner))
 
-	r.GET("/delivery/shortest-time/:deliveryPartner", deliveryHandler.GetMinimumTimeToDeliverAll)
+	r.GET("/delivery/zomato-mock/:deliveryPartner", deliveryHandler.GetMinimumTimeToDeliverAll)
 
 }
 

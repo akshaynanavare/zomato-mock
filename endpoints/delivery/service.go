@@ -3,11 +3,11 @@ package delivery
 import (
 	"time"
 
-	constants "github.com/akshaynanavare/shortest-time/constants"
-	graph "github.com/akshaynanavare/shortest-time/graph"
-	model "github.com/akshaynanavare/shortest-time/models"
-	repository "github.com/akshaynanavare/shortest-time/repository"
-	utils "github.com/akshaynanavare/shortest-time/utils"
+	constants "github.com/akshaynanavare/zomato-mock/constants"
+	graph "github.com/akshaynanavare/zomato-mock/graph"
+	model "github.com/akshaynanavare/zomato-mock/models"
+	repository "github.com/akshaynanavare/zomato-mock/repository"
+	utils "github.com/akshaynanavare/zomato-mock/utils"
 
 	"log"
 )

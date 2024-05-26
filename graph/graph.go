@@ -3,8 +3,8 @@ package graph
 import (
 	"fmt"
 
-	model "github.com/akshaynanavare/shortest-time/models"
-	utils "github.com/akshaynanavare/shortest-time/utils"
+	model "github.com/akshaynanavare/zomato-mock/models"
+	utils "github.com/akshaynanavare/zomato-mock/utils"
 )
 
 // Edge represents an edge in the graph

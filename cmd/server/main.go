@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	router "github.com/akshaynanavare/shortest-time/router"
+	router "github.com/akshaynanavare/zomato-mock/router"
 )
 
 func main() {

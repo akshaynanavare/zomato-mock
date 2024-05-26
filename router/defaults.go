@@ -1,7 +1,7 @@
 package router
 
 import (
-	model "github.com/akshaynanavare/shortest-time/models"
+	model "github.com/akshaynanavare/zomato-mock/models"
 )
 
 func defaultOrders() map[string][]*model.Order {

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	domain "github.com/akshaynanavare/shortest-time/domain"
+	domain "github.com/akshaynanavare/zomato-mock/domain"
 )
 
 func SuccessJSON(w http.ResponseWriter, r *http.Request, data interface{}) {

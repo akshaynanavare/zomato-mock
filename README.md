@@ -21,7 +21,7 @@ This project calculates the shortest time of deliveries based on the given data 
 
 To get the shortest time of deliveries with default values, use the following CURL command:
 ```sh
-curl --location --request GET 'http://127.0.0.1:8080/delivery/shortest-time/aman'
+curl --location --request GET 'http://127.0.0.1:8080/delivery/zomato-mock/aman'
 ```
 If you want to change the default values, check out the router/defaults.go file and update the order's data accordingly.
 

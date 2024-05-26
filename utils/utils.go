@@ -3,7 +3,7 @@ package utils
 import (
 	"math"
 
-	model "github.com/akshaynanavare/shortest-time/models"
+	model "github.com/akshaynanavare/zomato-mock/models"
 )
 
 func hsin(theta float64) float64 {

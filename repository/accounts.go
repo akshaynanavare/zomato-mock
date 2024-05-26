@@ -3,7 +3,7 @@ package repository
 import (
 	"errors"
 
-	model "github.com/akshaynanavare/shortest-time/models"
+	model "github.com/akshaynanavare/zomato-mock/models"
 )
 
 type Order interface {
