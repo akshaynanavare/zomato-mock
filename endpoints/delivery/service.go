@@ -1,7 +1,6 @@
 package delivery
 
 import (
-	"fmt"
 	"time"
 
 	constants "github.com/akshaynanavare/shortest-time/constants"
@@ -52,12 +51,16 @@ func (s *service) GetShortestPathOfActiveOrders(deliveryPartner string) (time.Ti
 }
 
 func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (float64, []string) {
-	orderGraph, nodes := NewGraph(partner, orders)
-	visited := map[string]bool{}
-	restaurantCustomerMap := map[string][]*model.Customer{}
-	restaurantMap := make(map[string]*model.Restaurant)
+	var (
+		travelledTime         float64
+		visited               = map[string]bool{}
+		restaurantCustomerMap = map[string][]*model.Customer{}
+		restaurantMap         = make(map[string]*model.Restaurant)
+		top                   utils.Path
 
-	var top utils.Path
+		// build graph
+		orderGraph, nodes = NewGraph(partner, orders)
+	)
 
 	for _, v := range orders {
 		if _, ok := restaurantCustomerMap[v.Restaurant.ID]; !ok {
@@ -68,10 +71,12 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 		restaurantMap[v.Restaurant.ID] = v.Restaurant
 	}
 
-	// fmt.Println("original graph : ")
-	// orderGraph.PrintGraph()
 	visited[partner.ID] = true
+
+	// build heap for restaurants
 	h := utils.NewHeap()
+
+	// add each restaurant into the heap with weight from max(time to reach restaurant or restaurant prep time)
 	for _, n := range orderGraph.GetEdges(partner.ID) {
 		maxTime := (n.Weight / constants.AvgBikeSpeed) * constants.Int60
 		if maxTime < float64(restaurantMap[n.Node.ID].AvgPrepTime) {
@@ -81,8 +86,6 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 
 		h.Push(utils.Path{Value: maxTime, Nodes: []string{partner.ID, n.Node.ID}})
 	}
-
-	var travelledTime float64
 
 	for h.Len() > 0 {
 		top = h.Pop()
@@ -96,16 +99,12 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 		// add customer in graph if curr node is restaurant
 		if customers, ok := restaurantCustomerMap[currNode]; ok {
 			for _, c := range customers {
-				fmt.Println("adding customer in graph : ", c)
 				customerNode := &graph.Node{
 					ID:       c.ID,
 					Location: c.Location,
 				}
 				orderGraph.AddEdgeToUnvistitedNodes(nodes, visited, customerNode)
 			}
-
-			log.Println("after adding customer in graph : ", customers)
-			orderGraph.PrintGraph()
 		}
 
 		for _, n := range orderGraph.GetEdges(currNode) {
@@ -120,17 +119,12 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 				}
 			}
 
-			fmt.Println("Got edge for source : ", currNode, " dest : ", n.Node.ID, "maxTime : ", int64(maxTime), "km : ", n.Weight)
-
 			heap.Push(utils.Path{Value: maxTime, Nodes: append(top.Nodes, []string{n.Node.ID}...)})
 		}
 
 		visited[currNode] = true
 		h = heap
 	}
-
-	fmt.Println("final graph : ")
-	// orderGraph.PrintGraph()
 
 	return top.Value, top.Nodes
 }

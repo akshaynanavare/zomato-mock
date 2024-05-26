@@ -23,13 +23,13 @@ type Graph struct {
 	AdjacencyList map[string][]Edge
 }
 
-func (g *Graph) AddEdge(source, id *Node, dist float64) {
+func (g *Graph) AddEdge(source, destination *Node, dist float64) {
 	g.AdjacencyList[source.ID] = append(g.AdjacencyList[source.ID], Edge{
-		Node:   *id,
+		Node:   *destination,
 		Weight: dist,
 	})
 
-	g.AdjacencyList[id.ID] = append(g.AdjacencyList[id.ID], Edge{
+	g.AdjacencyList[destination.ID] = append(g.AdjacencyList[destination.ID], Edge{
 		Node:   *source,
 		Weight: dist,
 	})

@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type Order struct {
 	Restaurant *Restaurant
 	Customer   *Customer
@@ -21,4 +23,13 @@ type Customer struct {
 type Location struct {
 	Lat  float64
 	Long float64
+}
+
+type DeliveryPartner struct {
+	ID                         string
+	Name                       string
+	Order                      []*Order
+	TimeRequiredToFinishOrders *time.Time
+	CurrentLocation            *Location
+	Path                       []string
 }
