@@ -37,7 +37,12 @@ If you want to change the default values, check out the router/defaults.go file 
 9. **Repeat Process**: Repeat the process from step 4 until the heap is empty.
 10. **Return Result**: Return the last heap node containing the time and path.
 
+## Time and Space Complexity
+1. Time = `O(N * N * log(N))` N : total nodes
+2. Space = `O(N)` 
+
 ## Oprimzation scope
 1. The above algorithm uses a greedy approach and might not provide the most optimal solution.
 2. Using Dynamic Programming (DP) by visiting all possible paths will yield a more optimized solution.
 3. There is scope for improvement in memory utilization.
+4. Unit test cases should be considered due to time constraints
