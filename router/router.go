@@ -33,7 +33,7 @@ func addRoutes(r *httprouter.Router) {
 
 	deliveryHandler := delivery.NewHandler(delivery.NewService(order, deliverPartner))
 
-	r.GET("/delivery/zomato-mock/:deliveryPartner", deliveryHandler.GetMinimumTimeToDeliverAll)
+	r.GET("/delivery/shortest-time/:deliveryPartner", deliveryHandler.GetMinimumTimeToDeliverAll)
 
 }
 
