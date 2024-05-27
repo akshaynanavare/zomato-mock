@@ -38,11 +38,12 @@ If you want to change the default values, check out the router/defaults.go file 
 10. **Return Result**: Return the last heap node containing the time and path.
 
 ## Time and Space Complexity
-1. Time = `O(N * N * log(N))` N : total nodes
-2. Space = `O(N)` 
+1. Time = `O(V + E * log(V))` V : total nodes, E : total edges
+2. Space = `O(V + E)` 
 
 ## Oprimzation scope
 1. The above algorithm uses a greedy approach and might not provide the most optimal solution.
 2. Using Dynamic Programming (DP) by visiting all possible paths will yield a more optimized solution.
 3. There is scope for improvement in memory utilization.
 4. Unit test cases should be considered due to time constraints
+5. Handle multiple customers from same restaurant. (current assumption 1:1 relation between customer and restaurant)

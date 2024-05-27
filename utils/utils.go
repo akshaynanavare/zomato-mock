@@ -10,7 +10,7 @@ func hsin(theta float64) float64 {
 	return math.Pow(math.Sin(theta/2), 2)
 }
 
-// Haversine function to calculate the distance between two points given their latitude and longitude
+// CalculateDistance : to calculate the distance between two points given their latitude and longitude using haversine formula.
 func CalculateDistance(p1, p2 *model.Location) float64 {
 	var la1, lo1, la2, lo2, r float64
 

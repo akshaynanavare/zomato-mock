@@ -19,6 +19,7 @@ func NewHandler(service Service) *Handler {
 	return &Handler{service: service}
 }
 
+// GetMinimumTimeToDeliverAll : handler for get minimum time to deliver all orders for a given delivery partner API request.
 func (h *Handler) GetMinimumTimeToDeliverAll(w http.ResponseWriter, r *http.Request, urlParams httprouter.Params) {
 	deliveryPartnerID := urlParams.ByName("deliveryPartner")
 	if deliveryPartnerID == "" {

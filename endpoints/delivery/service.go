@@ -30,26 +30,33 @@ func NewService(
 	}
 }
 
+// GetShortestPathOfActiveOrders : Handler for get shortest path of active orders of delivery partner
 func (s *service) GetShortestPathOfActiveOrders(deliveryPartner string) (time.Time, []string, error) {
+	// get orders of the delivery partner
 	orders, err := s.Order.GetOrdersByID(deliveryPartner)
 	if err != nil {
 		log.Printf("failed to get orders from DB err: %v", err)
 		return time.Time{}, nil, err
 	}
 
+	// get delivery partner object
 	partner, err := s.DeliveryPartner.GetDeliveryPartnerByID(deliveryPartner)
 	if err != nil {
 		log.Printf("failed to get delivery partner from DB err: %v", err)
 		return time.Time{}, nil, err
 	}
 
+	// find the shortest time and path
 	ts, path := findShortestPath(orders, partner)
-	// log.Println("path : ", path, "time : ", (distance/constants.AvgBikeSpeed)*60, "min")
+
+	// convert to duration
 	duration := time.Duration(ts * float64(time.Minute))
 
+	// return the time and path
 	return time.Now().Add(duration), path, nil
 }
 
+// findShortestPath : it returns the shortest path time of delivery partner.
 func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (float64, []string) {
 	var (
 		travelledTime         float64
@@ -107,12 +114,17 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 			}
 		}
 
+		// prepare next neighbours to visit
 		for _, n := range orderGraph.GetEdges(currNode) {
+			// if visited then skip
 			if visited[n.Node.ID] {
 				continue
 			}
+
+			// get maxTime by so far by travelling to the node + consumed time
 			maxTime := travelledTime + ((n.Weight / constants.AvgBikeSpeed) * constants.Int60)
 
+			// if maxTime is greater than restaurant prep time then use restaurant prep time
 			if val, ok := restaurantMap[n.Node.ID]; ok {
 				if maxTime < float64(val.AvgPrepTime) {
 					maxTime = float64(val.AvgPrepTime)
@@ -136,7 +148,6 @@ func NewGraph(p *model.DeliveryPartner, orders []*model.Order) (*graph.Graph, ma
 	}
 
 	nodesMap := map[string]*graph.Node{}
-
 	nodesMap[p.ID] = deliveryPartner
 
 	orderGraph := graph.Graph{
@@ -151,21 +162,13 @@ func NewGraph(p *model.DeliveryPartner, orders []*model.Order) (*graph.Graph, ma
 			Location: o.Restaurant.Location,
 		}
 
-		// customerNode := graph.Node{
-		// 	ID:       o.Customer.ID,
-		// 	Location: o.Customer.Location,
-		// }
-
 		if prev != nil {
 			orderGraph.AddEdge(prev, &currNode, utils.CalculateDistance(prev.Location, o.Restaurant.Location))
 		}
 
 		orderGraph.AddEdge(deliveryPartner, &currNode, utils.CalculateDistance(p.CurrentLocation, o.Restaurant.Location))
-		// graph.AddEdge(&currNode, &customerNode, utils.CalculateDistance(currNode.Location, customerNode.Location))
 		prev = &currNode
-
 		nodesMap[currNode.ID] = &currNode
-		// nodesMap[customerNode.ID] = &customerNode
 	}
 
 	return &orderGraph, nodesMap
