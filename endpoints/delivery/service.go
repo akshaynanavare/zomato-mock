@@ -85,11 +85,7 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 
 	// add each restaurant into the heap with weight from max(time to reach restaurant or restaurant prep time)
 	for _, n := range orderGraph.GetEdges(partner.ID) {
-		maxTime := (n.Weight / constants.AvgBikeSpeed) * constants.Int60
-		if maxTime < float64(restaurantMap[n.Node.ID].AvgPrepTime) {
-			log.Println("restaurant time is greater than travel time : ", maxTime, "node", n.Node.ID)
-			maxTime = float64(restaurantMap[n.Node.ID].AvgPrepTime)
-		}
+		maxTime := max((n.Weight/constants.AvgBikeSpeed)*constants.Int60, restaurantMap[n.Node.ID].AvgPrepTime)
 
 		h.Push(utils.Path{Value: maxTime, Nodes: []string{partner.ID, n.Node.ID}})
 	}
@@ -124,11 +120,9 @@ func findShortestPath(orders []*model.Order, partner *model.DeliveryPartner) (fl
 			// get maxTime by so far by travelling to the node + consumed time
 			maxTime := travelledTime + ((n.Weight / constants.AvgBikeSpeed) * constants.Int60)
 
-			// if maxTime is greater than restaurant prep time then use restaurant prep time
+			// if maxTime is smaller than restaurant prep time then use restaurant prep time
 			if val, ok := restaurantMap[n.Node.ID]; ok {
-				if maxTime < float64(val.AvgPrepTime) {
-					maxTime = float64(val.AvgPrepTime)
-				}
+				maxTime = max(maxTime, val.AvgPrepTime)
 			}
 
 			heap.Push(utils.Path{Value: maxTime, Nodes: append(top.Nodes, []string{n.Node.ID}...)})
